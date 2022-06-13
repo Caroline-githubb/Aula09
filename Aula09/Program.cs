@@ -1,14 +1,27 @@
 ﻿double resultado = 0;
 
+
+
 double somarValor() 
 {
     double valor;
     double resultadoFuncao;
     Console.WriteLine("Você digitou 1 - Somar");
     Console.WriteLine("Qual valor deseja Somar");
-    valor = double.Parse(Console.ReadLine());
-    resultadoFuncao = resultado + valor;
-    definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+    try { 
+        valor = double.Parse(Console.ReadLine());
+        resultadoFuncao = resultado + valor;
+        definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+    }
+    catch (FormatException ex)
+    {
+        Console.WriteLine("Você deve digitar um número -> " + ex.Message);
+    }
+     
+    
+
+        
+    
 
 
     return pegarResultadoDaUltimaOperacaoMatematica();
@@ -20,33 +33,62 @@ double subtrairValor()
     double resultadoFuncao;
     Console.WriteLine("Você digitou 2 - Subtrair");
     Console.WriteLine("Qual valor deseja Subtrair?");
-    valor = double.Parse(Console.ReadLine());
-    resultadoFuncao = resultado - valor;
-    definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+    try
+    {
+        valor = double.Parse(Console.ReadLine());
+        resultadoFuncao = resultado - valor;
+        definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+    }
+    catch(FormatException ex) {
+        Console.WriteLine("Você deve digitar um número -> " + ex.Message);
+    }
+    
+
     
     
     return pegarResultadoDaUltimaOperacaoMatematica();
 }
 
+void dividePorZero(double valor)
+{
+    if(valor == 0)
+    {
+        throw new DivideByZeroException( message: "Não pode ser zero");
+    }
+}
+
 double dividirValor() 
 {
-    
+
+    double valor;
+    double resultadoFuncao;
+    Console.WriteLine("Você digitou 4 - Dividir");
+    Console.WriteLine("Qual valor deseja Dividir?");
     try
     {
-        double valor;
-        double resultadoFuncao;
-        Console.WriteLine("Você digitou 4 - Dividir");
-        Console.WriteLine("Qual valor deseja Dividir?");
         valor = double.Parse(Console.ReadLine());
-        resultadoFuncao = resultado / valor;
-        definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+        try
+        {
+            dividePorZero(valor);
+            resultadoFuncao = resultado / valor;
+            definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Não pode dividir por zero");
 
+        }
     }
+    catch (FormatException ex)
+    {
+        Console.WriteLine("Você deve digitar um número -> " + ex.Message);
+    }
+   
     catch(Exception ex)
     {
-        Console.WriteLine("Não é possível divir por 0" + ex.Message);
+        Console.WriteLine("Não pode dividir por zero");
+        
     }
-
     return pegarResultadoDaUltimaOperacaoMatematica();
 }
 
@@ -56,10 +98,17 @@ double multiplicarValor()
     double resultadoFuncao;
     Console.WriteLine("Você digitou 3 - Multiplicar");
     Console.WriteLine("Qual valor deseja Multiplicar?");
-    valor = double.Parse(Console.ReadLine());
-    resultadoFuncao = resultado * valor;
-    definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+    try
+    {
+        valor = double.Parse(Console.ReadLine());
+        resultadoFuncao = resultado * valor;
+        definirResultadoDaUltimaOperacaoMatematica(resultadoFuncao);
+    }
 
+    catch (FormatException ex)
+    {
+        Console.WriteLine("Você deve digitar um número -> " + ex.Message);
+    }
 
     return pegarResultadoDaUltimaOperacaoMatematica();
 }
